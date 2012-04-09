@@ -21,7 +21,7 @@ Add the following lines to ~/.gitconfig:
 Usage
 -----
 
-	$ git remote set-url origin https://shugo@github.com/shugo/git-credential-gnomekeyring.git
+	$ git remote set-url origin https://<usename>@<host>/<path>
 	$ git push origin master
 	Password for 'https://shugo@github.com': 
 	...
@@ -29,6 +29,8 @@ Usage
 	(Password never asked)
 	...
 	$
+
+Note that you have to include the username in the URL.
 
 License
 -------
