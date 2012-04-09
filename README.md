@@ -4,14 +4,14 @@ git-credential-gnomekeyring
 git-credential-gnomekeyring is a git credential helper for Gnome Keyring.
 
 Install
-========================
+-------
 
 	$ git clone https://github.com/shugo/git-credential-gnomekeyring.git
 	$ make
 	$ cp git-credential-gnomekeyring $prefix/libexec/git-core/
 
 Configuration
-========================
+-------------
 
 Add the following lines to ~/.gitconfig:
 
@@ -19,7 +19,7 @@ Add the following lines to ~/.gitconfig:
 		helper = gnomekeyring
 
 Usage
-========================
+-----
 
 	$ git remote set-url origin https://shugo@github.com/shugo/git-credential-gnomekeyring.git
 	$ git push origin master
@@ -31,7 +31,8 @@ Usage
 	$
 
 License
-========================
+-------
+
 	(The MIT License)
 
 	Copyright (c) 2012 Shugo Maeda
