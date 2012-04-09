@@ -51,7 +51,6 @@ get_password(git_credential_t *cred)
 					      "username", cred->username,
 					      NULL);
     if (keyres != GNOME_KEYRING_RESULT_OK) {
-	error("password not found");
 	return;
     }
     g_printf("password=%s\n", pass);
