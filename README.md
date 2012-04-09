@@ -7,8 +7,9 @@ Install
 -------
 
 	$ git clone https://github.com/shugo/git-credential-gnomekeyring.git
+	$ cd git-credential-gnomekeyring/
 	$ make
-	$ cp git-credential-gnomekeyring $prefix/libexec/git-core/
+	$ cp git-credential-gnomekeyring /path/to/bin/
 
 Configuration
 -------------
@@ -21,6 +22,7 @@ Add the following lines to ~/.gitconfig:
 Usage
 -----
 
+	$ cd /path/to/your/repository/
 	$ git remote set-url origin https://<usename>@<host>/<path>
 	$ git push origin master
 	Password for 'https://shugo@github.com': 
