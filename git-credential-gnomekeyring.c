@@ -143,7 +143,8 @@ clear_credential(git_credential_t *cred)
     if (cred->password) gnome_keyring_free_password(cred->password);
 }
 
-int main(int argc, const char **argv)
+int
+main(int argc, const char **argv)
 {
     git_credential_t cred = {0};
 
@@ -160,10 +161,10 @@ int main(int argc, const char **argv)
     if (strcmp(argv[1], "get") == 0) {
 	get_password(&cred);
     }
-    else if (!strcmp(argv[1], "store")) {
+    else if (strcmp(argv[1], "store") == 0) {
 	store_password(&cred);
     }
-    else if (!strcmp(argv[1], "erase")) {
+    else if (strcmp(argv[1], "erase") == 0) {
 	erase_password(&cred);
     }
     clear_credential(&cred);
