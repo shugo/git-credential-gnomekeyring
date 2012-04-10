@@ -12,7 +12,6 @@ static GnomeKeyringPasswordSchema git_schema = {
         { "host", GNOME_KEYRING_ATTRIBUTE_TYPE_STRING },
         { "path", GNOME_KEYRING_ATTRIBUTE_TYPE_STRING },
         { "username", GNOME_KEYRING_ATTRIBUTE_TYPE_STRING },
-        { "password", GNOME_KEYRING_ATTRIBUTE_TYPE_STRING },
         { NULL, 0 },
     }
 };
