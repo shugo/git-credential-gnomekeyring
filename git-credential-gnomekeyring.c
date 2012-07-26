@@ -39,21 +39,28 @@ error(const char *err, ...)
 static void
 get_password(git_credential_t *cred)
 {
+    GnomeKeyringAttributeList *attrs;
     GnomeKeyringResult keyres;
-    gchar *pass = NULL;
+    GList *found;
     
-    keyres = gnome_keyring_find_password_sync(&git_schema,
-					      &pass,
-					      "protocol", cred->protocol,
-					      "host", cred->host,
-					      "path", cred->path,
-					      "username", cred->username,
-					      NULL);
-    if (keyres != GNOME_KEYRING_RESULT_OK) {
+    attrs = gnome_keyring_attribute_list_new();
+    gnome_keyring_attribute_list_append_string(attrs, "protocol", cred->protocol);
+    gnome_keyring_attribute_list_append_string(attrs, "host", cred->host);
+    if (cred->path) {
+	gnome_keyring_attribute_list_append_string(attrs, "path", cred->path);
+    }
+    if (cred->username) {
+	gnome_keyring_attribute_list_append_string(attrs, "username", cred->username);
+    }
+    
+    keyres = gnome_keyring_find_items_sync(git_schema.item_type, attrs, &found);
+    gnome_keyring_attribute_list_free(attrs);
+    if (keyres != GNOME_KEYRING_RESULT_OK || !found) {
 	return;
     }
-    g_printf("password=%s\n", pass);
-    gnome_keyring_free_password(pass);
+    
+    g_printf("password=%s\n", ((GnomeKeyringFound *)found->data)->secret);
+    gnome_keyring_found_list_free(found);
 }
 
 static void
