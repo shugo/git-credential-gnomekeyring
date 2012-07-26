@@ -42,6 +42,7 @@ get_password(git_credential_t *cred)
     GnomeKeyringAttributeList *attrs;
     GnomeKeyringResult keyres;
     GList *found;
+    int i;
     
     attrs = gnome_keyring_attribute_list_new();
     gnome_keyring_attribute_list_append_string(attrs, "protocol", cred->protocol);
@@ -60,6 +61,14 @@ get_password(git_credential_t *cred)
     }
     
     g_printf("password=%s\n", ((GnomeKeyringFound *)found->data)->secret);
+    attrs = ((GnomeKeyringFound *)found->data)->attributes;
+    for (i = 0; i < attrs->len; ++i) {
+	GnomeKeyringAttribute *attr = &gnome_keyring_attribute_list_index(attrs, i);
+	if (attr->type == GNOME_KEYRING_ATTRIBUTE_TYPE_STRING &&
+	    !strcmp(attr->name, "username")) {
+	    g_printf("username=%s\n", attr->value.string);
+	}
+    }
     gnome_keyring_found_list_free(found);
 }
 
