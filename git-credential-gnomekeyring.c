@@ -36,15 +36,10 @@ error(const char *err, ...)
     va_end(params);
 }
 
-static void
-get_password(git_credential_t *cred)
+static GnomeKeyringAttributeList *
+prepare_attrs(const git_credential_t *cred)
 {
-    GnomeKeyringAttributeList *attrs;
-    GnomeKeyringResult keyres;
-    GList *found;
-    int i;
-    
-    attrs = gnome_keyring_attribute_list_new();
+    GnomeKeyringAttributeList *attrs = gnome_keyring_attribute_list_new();
     gnome_keyring_attribute_list_append_string(attrs, "protocol", cred->protocol);
     gnome_keyring_attribute_list_append_string(attrs, "host", cred->host);
     if (cred->path) {
@@ -53,6 +48,18 @@ get_password(git_credential_t *cred)
     if (cred->username) {
 	gnome_keyring_attribute_list_append_string(attrs, "username", cred->username);
     }
+    return attrs;
+}
+
+static void
+get_password(git_credential_t *cred)
+{
+    GnomeKeyringAttributeList *attrs;
+    GnomeKeyringResult keyres;
+    GList *found;
+    int i;
+    
+    attrs = prepare_attrs(cred);
     
     keyres = gnome_keyring_find_items_sync(git_schema.item_type, attrs, &found);
     gnome_keyring_attribute_list_free(attrs);
@@ -102,18 +109,24 @@ store_password(git_credential_t *cred)
 static void
 erase_password(git_credential_t *cred)
 {
+    GnomeKeyringAttributeList *attrs;
     GnomeKeyringResult keyres;
+    GList *found;
 
-    keyres = gnome_keyring_delete_password_sync(&git_schema,
-						"protocol", cred->protocol,
-						"host", cred->host,
-						"path", cred->path,
-						"username", cred->username,
-						NULL);
+    attrs = prepare_attrs(cred);
+
+    keyres = gnome_keyring_find_items_sync(git_schema.item_type, attrs, &found);
+    gnome_keyring_attribute_list_free(attrs);
     if (keyres != GNOME_KEYRING_RESULT_OK) {
 	error("failed to delete password");
 	return;
     }
+
+    while (found) {
+	gnome_keyring_item_delete_sync(NULL, ((GnomeKeyringFound *)found->data)->item_id);
+	found = g_list_next(found);
+    }
+    gnome_keyring_found_list_free(found);
 }
 
 static int
