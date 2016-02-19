@@ -3,6 +3,11 @@ git-credential-gnomekeyring
 
 git-credential-gnomekeyring is a git credential helper for Gnome Keyring.
 
+WARNING
+-------
+
+GNOME keyring support is now included in git, so this project is deprecated.
+
 Install
 -------
 
