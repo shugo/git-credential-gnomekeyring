@@ -8,6 +8,27 @@ WARNING
 
 GNOME keyring support is now included in git, so this project is deprecated.
 
+For example, the official GNOME keyring support is available in the
+following Linux distributions.
+
+### Debian/Ubuntu/Mint Linux
+
+There is a git package that includes all of contrib sources in
+/usr/share/doc/git/contrib/.
+Users who want to use git-credential-gnomekeyring should copy source from
+/usr/share/doc/git/contrib/credential/gnome-keyring to their working
+directory, then users can make and install it.
+
+### Arch Linux
+
+There is a package.
+https://aur.archlinux.org/packages/git-credential-gnome-keyring/
+
+### Fedora23
+
+Its git-core package includes git-credential-gnome-keyring binary then users
+can just use it.
+
 Install
 -------
 
