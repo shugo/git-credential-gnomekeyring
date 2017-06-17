@@ -24,10 +24,16 @@ directory, then users can make and install it.
 There is a package.
 https://aur.archlinux.org/packages/git-credential-gnome-keyring/
 
-### Fedora23
+### Fedora 25
 
 Its git-core package includes git-credential-gnome-keyring binary then users
 can just use it.
+
+### Fedora 26
+
+In recent git-core `git-credential-gnome-keyring` has been superseded by
+`git-credential-libsecret`.
+To use it execute `git config --global credential.helper libsecret` in terminal.
 
 Install
 -------
